@@ -1,0 +1,28 @@
+{
+  "name": "4",
+  "version": "1.0.0",
+  "description": "Day 3 Assignment 5",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soethandar90/mwa.git"
+  },
+  "keywords": [
+    "NODE",
+    "NPM"
+  ],
+  "author": "Soe Thandar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soethandar90/mwa/issues"
+  },
+  "homepage": "https://github.com/soethandar90/mwa#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  }
+}
