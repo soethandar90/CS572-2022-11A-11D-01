@@ -1,0 +1,20 @@
+{
+  "name": "app34",
+  "version": "1.0.0",
+  "description": "Meangame",
+  "main": "app34.js",
+  "scripts": {
+    "start": "node app34.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "NODE",
+    "NPM"
+  ],
+  "author": "Soe Thandar",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  }
+}
