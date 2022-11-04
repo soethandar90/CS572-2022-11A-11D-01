@@ -1,0 +1,23 @@
+{
+  "name": "conntest",
+  "version": "1.0.0",
+  "description": "DB Connection Test",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "NODE",
+    "EXPRESS",
+    "NPM"
+  ],
+  "author": "Soe Thandar",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongodb": "^4.11.0",
+    "nodemon": "^2.0.20"
+  }
+}

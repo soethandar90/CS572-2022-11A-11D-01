@@ -1,5 +1,5 @@
 const dbConnection = require("../data/dbconnection").open();
-
+console.log("Hello dbConnection1 "+dbConnection);
 require("../require/index");
 
 const gamesData = require(process.env.GAMES_JSON);
@@ -7,24 +7,46 @@ const gamesData = require(process.env.GAMES_JSON);
 module.exports.getAll = function(req, res){  
     console.log(process.env.GET_METHOD_ALL_RECEIVED);
 
-    const db = dbConnection.get();
-    console.log(process.env.DB, db);
-    
-    const gamesCollection = db.collection(process.env.GAMES_COLLECTIONS);
-    
-    let offset = 0;
-    let count = 4;
-    if(req.query && req.query.offset){
-        offset = parseInt(req.query.offset, 7);
-    }
-    if(req.query && req.query.count){
-        count = parseInt(req.query.count, 7);
-    }
+    console.log("Before getting... ");
+    //dbConnection.open();
 
-    gamesCollection.find().skip(offset).limit(count).toArray(function(err, gamesData){
-    console.log(gamesData);
-    respondOK(process.env.GET_METHOD_ONE_RECEIVED, res, gamesData);
-    });   
+    //Code to solve :  Cannot read properties of undefined (reading 'get')
+    const db = dbConnection.get();
+    console.log(db);
+
+    //Code to solve : no response from games
+    //const db = dbConnection.get(function(err,result){
+    //    console.log("This is inside callback");
+    //    if(err){
+    //        console.log("This is inside err");
+            
+    //    }else{
+    //        console.log("This is inside OK");
+    //        console.log(db);
+    //    }
+        
+    //});
+
+    //Code to solve : remove params in callback, still not working
+    //const db = dbConnection.get(function(){
+    //    const gamesCollection = db.collection("games");
+            
+    //    let offset = 0;
+    //    let count = 4;
+    //    if(req.query && req.query.offset){
+    //        offset = parseInt(req.query.offset, 7);
+    //    }
+    //    if(req.query && req.query.count){
+    //        count = parseInt(req.query.count, 7);
+    //    }
+    
+    //    gamesCollection.find().skip(offset).limit(count).toArray(function(err, gamesData){
+    //    console.log(gamesData);
+    //    respondOK(process.env.GET_METHOD_ONE_RECEIVED, res, gamesData);
+    //    });   
+    //});
+           
+   
 }
 
 module.exports.getOne = function(req, res){
