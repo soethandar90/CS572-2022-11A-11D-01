@@ -2,7 +2,6 @@
 
 require("dotenv").config();
 const MongoClient=require("mongodb").MongoClient;
-
 let dbo = null;
 MongoClient.connect("mongodb://127.0.0.1:27017/", function(err,conn){
     if(err){
