@@ -1,6 +1,5 @@
 const mongoose = require(process.env.MONGOOSE);
 const MusicCollection = mongoose.model(process.env.MUSIC_COLLECTION_SCHEMA_KEY);
-
 const getAll = function (req, res) {
     console.log(process.env.ALBUM_GETALL_REQUEST_RECEIVED_MESSAGE);
     const mColId = req.params.mColId;
