@@ -1,25 +1,41 @@
-const mongoose = require("mongoose");
-const MusicCollection = mongoose.model("MusicCollection");
+const mongoose = require(process.env.MONGOOSE);
+const MusicCollection = mongoose.model(process.env.MUSIC_COLLECTION_SCHEMA_KEY);
 
 const getAll = function (req, res) {
+    console.log(process.env.ALBUM_GETALL_REQUEST_RECEIVED_MESSAGE);
     const mColId = req.params.mColId;
-    console.log("Get all album controller");
-    MusicCollection.findById(mColId).select("album").exec(function (err, result) {
-        console.log("Found albums ", result.album, " for artist ", result);
-        res.status(200).json(result.album);
+    MusicCollection.findById(mColId).select(process.env.ALBUM_SCHEMA_NAME).exec(function (err, result) {
+        const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
+        if (err) {
+            console.log(process.env.FIND_ERROR_MESSAGE);
+            response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+            response.message = err;
+        }
+        res.status(response.status).json(result.album);
     });
 
 }
 
 const getOne = function (req, res) {
-    console.log("GET one album Controller");
+    console.log(process.env.ALBUM_GETONE_REQUEST_RECEIVED_MESSAGE);
     const mColId = req.params.mColId;
-    const albumName = req.params.albumName;
-    MusicCollection.findById(mColId).select("album").select(albumName).exec(function (err, result) {
-        console.log("Hello");
-        console.log(result);
-        res.status(200).json(result);
+    const albumId = req.params.albumId;
+    console.log(albumId);
+    //MusicCollection.findById(mColId).findOne({"album._id":albumId}).exec(function (err, result) {
+    //    console.log(result);
+    //    res.status(200).json(result);
+    //});
+    MusicCollection.findById(mColId).select(process.env.process.env.ALBUM_SCHEMA_NAME).exec(function (err, result) {
+        const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
+        if (err) {
+            console.log(process.env.FIND_ERROR_MESSAGE);
+            response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+            response.message = err;
+        }
+        res.status(response.status).json(result.album);
     });
+
+
 }
 
 

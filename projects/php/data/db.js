@@ -1,40 +1,39 @@
-require("./musicCollection-model");
-//db.js will connect with mongoose
-const mongoose = require("mongoose");
+require(process.env.MUSIC_COLLECTION_MODEL);
+const mongoose = require(process.env.MONGOOSE);
 
 mongoose.connect(process.env.DB_URL);
 
-mongoose.connection.on("connected", function () {
-    console.log("Mongoose Connected");
+mongoose.connection.on(process.env.CONNECTED_STATUS, function () {
+    console.log(process.env.MONGOOSE_CONNECTED_MESSAGE);
 });
 
-mongoose.connection.on("disconnected", function () {
-    console.log("Mongoose Disconnected");
+mongoose.connection.on(process.env.DISCONNECTED_STATUS, function () {
+    console.log(process.env.MONGOOSE_CONNECTED_MESSAGE);
 });
 
-mongoose.connection.on("error", function (error) {
-    console.log("Mongoose Connection Error", error);
+mongoose.connection.on(process.env.ERROR_STATUS, function (error) {
+    console.log(process.env.MONGOOSE_CONNECTION_ERROR_MESSAGE, error);
 });
 
-process.on("SIGNT", function () {
-    console.log("Interruption received");
+process.on(process.env.SIGNT, function () {
+    console.log(process.env.INTERRUPTION_RECEIVED_MESSAGE);
     mongoose.connection.close(function () {
-        console.log("Mongoose Close done.");
-        process.exit(0);
+        console.log(process.env.MONGOOSE_CLOSE_MESSAGE);
+        process.exit(process.env.EXIT_CODE);
     });
 })
 
-process.on("SIGTERM", function () {
-    console.log("Termination received");
+process.on(process.env.SIGTERM, function () {
+    console.log(process.env.TERMINATION_RECEIVED_MESSAGE);
     mongoose.connection.close(function () {
-        console.log("Mongoose Close done.");
-        process.exit(0);
+        console.log(process.env.MONGOOSE_CLOSE_MESSAGE);
+        process.exit(process.env.EXIT_CODE);
     });
 })
 
-process.once("SIGUSR2", function () {
+process.once(process.env.SIGUSR2, function () {
     mongoose.connection.close(function () {
         console.log(process.env.SIGUSR2_MESSAGE);
-        process.kill(process.pid, "SIGUSR2");
+        process.kill(process.pid, process.env.SIGUSR2);
     });
 })

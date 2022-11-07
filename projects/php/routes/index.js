@@ -1,27 +1,24 @@
 //routes are express routes, have to do as express design
-const express = require("express");
-const musicCollectionController = require("../controller/musicCollection.controller");
-const albumController = require("../controller/album.controller");
-const router = express.Router()
-const bodyParser = require("body-parser");
+require("dotenv").config();
+const express = require(process.env.EXPRESS);
+const musicCollectionController = require(process.env.MUSIC_COLLECTION_CONTROLLER_PATH);
+const albumController = require(process.env.ALBUM_CONTROLLER_PATH);
+const router = express.Router();
 
-//route need method and url
-router.route("/musicCollection")
+//routes need method and url
+router.route(process.env.MUSIC_COLLECTION_ROUTE)
     .get(musicCollectionController.getAll)
     .post(musicCollectionController.addOne);
 
-router.route("/musicCollection/:mColId") // : is a placeholder
+router.route(process.env.MUSIC_COLLECTION_BYID_ROUTE)
     .get(musicCollectionController.getOne)
     .delete(musicCollectionController.deleteOne)
     .put(musicCollectionController.updateOne);
 
-router.route("/musicCollection/:mColId/album") // : is a placeholder
+router.route(process.env.MUSIC_COLLECTION_BYID_ALBUM_ROUTE)
     .get(albumController.getAll)
 
-    router.route("/musicCollection/:mColId/album/:albumName") // : is a placeholder
-    .get(albumController.getOne)
-
-router.route("/musicCollection/:mColId/:albumName") // : is a placeholder
+router.route(process.env.MUSIC_COLLECTION_BYID_ALBUM_BYAID_ROUTE)
     .get(albumController.getOne)
 
 //exporting router function
