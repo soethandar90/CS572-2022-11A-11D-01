@@ -24,7 +24,7 @@ const getOne = function (req, res) {
     //    console.log(result);
     //    res.status(200).json(result);
     //});
-    MusicCollection.findById(mColId).select(process.env.process.env.ALBUM_SCHEMA_NAME).exec(function (err, result) {
+    MusicCollection.findById(mColId).select(process.env.ALBUM_SCHEMA_NAME).exec(function (err, result) {
         const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
         if (err) {
             console.log(process.env.FIND_ERROR_MESSAGE);
