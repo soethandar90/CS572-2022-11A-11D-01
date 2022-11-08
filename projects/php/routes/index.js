@@ -18,6 +18,8 @@ router.route(process.env.MUSIC_COLLECTION_BYID_ROUTE)
 
 router.route(process.env.MUSIC_COLLECTION_BYID_ALBUM_ROUTE)
     .get(albumController.getAll)
+    .put(albumController.fullUpdateOne)
+    .patch(albumController.partialUpdateOne);
 
 router.route(process.env.MUSIC_COLLECTION_BYID_ALBUM_BYAID_ROUTE)
     .get(albumController.getOne)
