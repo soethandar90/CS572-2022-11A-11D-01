@@ -13,7 +13,8 @@ router.route(process.env.MUSIC_COLLECTION_ROUTE)
 router.route(process.env.MUSIC_COLLECTION_BYID_ROUTE)
     .get(musicCollectionController.getOne)
     .delete(musicCollectionController.deleteOne)
-    .put(musicCollectionController.fullUpdateOne);
+    .put(musicCollectionController.fullUpdateOne)
+    .patch(musicCollectionController.partialUpdateOne);
 
 router.route(process.env.MUSIC_COLLECTION_BYID_ALBUM_ROUTE)
     .get(albumController.getAll)
