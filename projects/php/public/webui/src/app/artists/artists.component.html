@@ -1,0 +1,7 @@
+The list of Artists are:<br/>
+
+<ul>
+    <li *ngFor="let artist of artists">
+        <a routerLink="{{artist._id}}">{{artist._id}} - {{artist.name}}</a>
+    </li>
+</ul>

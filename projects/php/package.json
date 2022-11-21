@@ -4,7 +4,9 @@
   "description": "Meangame",
   "main": "app01.js",
   "scripts": {
-    "start": "nodemon --inspect",
+    "startBackend": "nodemon --inspect",
+    "startFrontend": "cd public/webui && npm start",
+    "start": "npm run startBackend | npm run startFrontend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -15,8 +17,11 @@
   "author": "Soe Thandar",
   "license": "ISC",
   "dependencies": {
+    "@angular/cli": "^14.2.9",
+    "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.11.0",
     "mongoose": "^6.7.1"
   }

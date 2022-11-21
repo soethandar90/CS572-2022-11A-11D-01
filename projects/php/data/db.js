@@ -1,4 +1,5 @@
-require(process.env.MUSIC_COLLECTION_MODEL);
+require(process.env.ARTIST_COLLECTION_MODEL_PATH);
+require("./users-model");
 const mongoose = require(process.env.MONGOOSE);
 
 mongoose.connect(process.env.DB_URL);
