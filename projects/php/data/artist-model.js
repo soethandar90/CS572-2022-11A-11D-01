@@ -1,21 +1,14 @@
-//const album = require("./album-model");
-//Tested : _id for each album was note created automatically when separate schema is used.
-
 const mongoose = require(process.env.MONGOOSE);
+const albumModel = require("./album-model");
 const artistSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      required: true
+      required: true,
+      default: "New Artist"
     },
     dob: String,
-    album: [
-      {
-        name: String,
-        year: Number,
-        noOfSongs: Number
-      }
-    ]
+    album: [albumModel]
   });
 
 mongoose.model(process.env.ARTIST_SCHEMA_KEY, artistSchema, process.env.ARTIST_SCHEMA_NAME);
