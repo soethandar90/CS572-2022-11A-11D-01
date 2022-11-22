@@ -1,19 +1,42 @@
 import { Component, OnInit } from '@angular/core';
 import { ArtistdataService } from '../artistdata.service';
 
-export class Artist {
-  #_id!: String;
-  #name!: String;
-  #dob!: String;
+export class Album{
+  #_id!:string;
+  #name!:string;
+  #year!:Number;
+  #noOfSongs!:Number;
 
   get _id() { return this.#_id; }
-  set _id(_id: String) { this.#_id = _id; }
+  set _id(_id: string) { this.#_id = _id; }
 
   get name() { return this.#name; }
-  set name(name: String) { this.#name = name; }
+  set name(name: string) { this.#name = name; }
+
+  get year() { return this.#year; }
+  set year(year: Number) { this.#year = year; }
+
+  get noOfSongs() { return this.#noOfSongs; }
+  set noOfSongs(noOfSongs: Number) { this.#noOfSongs = noOfSongs; }
+}
+
+export class Artist {
+  #_id!: string;
+  #name!: string;
+  #dob!: string;
+  #album!:Album[];
+
+  get _id() { return this.#_id; }
+  set _id(_id: string) { this.#_id = _id; }
+
+  get name() { return this.#name; }
+  set name(name: string) { this.#name = name; }
 
   get dob() { return this.#dob; }
-  set dob(dob: String) { this.#dob = dob; }
+  set dob(dob: string) { this.#dob = dob; }
+
+  get album(){return this.#album;}
+  set album(album:Album[]){this.#album=album;}
 }
 
 @Component({

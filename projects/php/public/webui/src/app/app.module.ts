@@ -9,6 +9,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DefaultErrorComponent } from './default-error/default-error.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddOneArtistComponent } from './add-one-artist/add-one-artist.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
     ArtistsComponent,
     FooterComponent,
     NavigationComponent,
-    DefaultErrorComponent
+    DefaultErrorComponent,
+    AddOneArtistComponent
   ],
   imports: [
     BrowserModule,
@@ -28,8 +30,12 @@ import { HttpClientModule } from '@angular/common/http';
         component: ArtistsComponent
       },
       {
-        path: "artists/:artistsId",
+        path: "artists/:artistId",
         component: ArtistComponent
+      },
+      {
+        path:"addOneArtist",
+        component:AddOneArtistComponent
       },
       {
         path:"**",

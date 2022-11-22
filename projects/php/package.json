@@ -1,8 +1,8 @@
 {
-  "name": "app18x",
+  "name": "meanartists",
   "version": "1.0.0",
-  "description": "Meangame",
-  "main": "app01.js",
+  "description": "My MeanPHP Project",
+  "main": "index.js",
   "scripts": {
     "startBackend": "nodemon --inspect",
     "startFrontend": "cd public/webui && npm start",

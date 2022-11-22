@@ -1,1 +1,7 @@
-<p>artist works!</p>
+<H1>Artist: {{artist.name}}<br/></H1>
+<br/>
+ID: {{artist._id}}<br/>
+Name: {{artist.name}}<br/> 
+Date of Birth: {{artist.dob}}<br/>
+<p *ngFor = "let ab of artist.album">{{ab.name}} - {{ab.year}} - {{ab.noOfSongs}}</p>
+<button (click)="deleteOneArtist(artist._id)">Delete</button>

@@ -15,10 +15,26 @@ export class ArtistdataService {
     const url: string = this.apiBaseUrl + "/artists";
     return this.http.get<Artist[]>(url);
   }
+  
+  // public getSearchArtists(artistName:string):Observable<Artist[]>{
+  //   const url:string=this.apiBaseUrl+"/search?name="+artistName;
+  //   return this.http.get<Artist[]>(url);
+  // }
 
   public getOneArtist(artistId: string): Observable<Artist> {
     const url: string = this.apiBaseUrl + "/artists/" + artistId;
     return this.http.get<Artist>(url);
   }
+
+  public deleteOneArtist(artistId:string):any{
+   const url: string = this.apiBaseUrl + "/artists/" + artistId;
+   return this.http.delete(url);
+  }
+
+  public addOneArtist(artist : Artist) :Observable<Artist>{
+    const url = this.apiBaseUrl + "/artists";
+    return this.http.post(url, artist) as Observable<Artist>;
+  }
+
 
 }

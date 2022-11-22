@@ -6,9 +6,15 @@ const routes = require("./routes/artists");
 const app = express();
 app.use("/api",function (req, res, next) {
     //allow cors policy
-   // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
-    //res.header("Access-Control-Allow-Methods", "GET, DELETE");
-    //res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    // res.header("Access-Control-Allow-Origin", "http://127.0.0.1:4200");
+    // res.header("Access-Control-Allow-Methods", "GET, DELETE");
+    // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    // res.header("strict-origin-when-cross-origin");
+
+    res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Preflight, Authorization, X-Token"); 
+    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+
     console.log(req.method, req.url, req.body);
     next();
 });
