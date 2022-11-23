@@ -11,6 +11,9 @@ router.route(process.env.ARTIST_ROUTE)
     .get(artistController.getAll)
     .post(artistController.addOne);
 
+router.route(process.env.ARTIST_ROUTE_MULTI)
+    .post(artistController.addAll);
+
 router.route(process.env.ARTIST_BYID_ROUTE)///artists/:artistId
     //.get(authenticationController.authenticate, artistController.getOne)
     .get(artistController.getOne)

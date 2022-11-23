@@ -1,17 +1,20 @@
 const mongoose = require(process.env.MONGOOSE);
 const Artists = mongoose.model(process.env.ARTIST_SCHEMA_KEY);
 
-const getAll = function (req, res) { 
-    console.log("Artist Controller GetAll");  
+const getAll = function (req, res) {
+    console.log("Artist Controller GetAll");
     let offset = process.env.DEFAULT_OFFSET;
     let count = process.env.DEFAULT_LIMIT;
     if (req.query && req.query.offset) {
         offset = parseInt(req.query.offset, process.env.MAXIMUM_OFFSET);
     }
     if (req.query && req.query.count) {
-        offset = parseInt(req.query.count, process.env.MAXIMUM_OFFSET);
-    }
-    Artists.find().skip(offset).limit(count).sort([['_id', -1]]).exec(function (err, result) {
+        count = parseInt(req.query.count, process.env.MAXIMUM_OFFSET);
+    }    
+    Artists.find()
+    //.skip(offset)
+    //.limit(count)
+    .sort([['_id', -1]]).exec(function (err, result) {
         const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
         if (err) {
             console.log(process.env.FIND_ERROR_MESSAGE);
@@ -72,6 +75,24 @@ const addOne = function (req, res) {
         dob: req.body.dob,
         album: req.body.album
     };
+    Artists.create(newArtist, function (err, result) {
+        const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
+        if (err) {
+            console.log(process.env.ADD_ONE_ERROR_MESSAGE);
+            response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+            response.message = err;
+        }
+        res.status(response.status).json(response.message);
+    })
+}
+
+const addAll = function (req, res) {
+    //console.log(process.env.ADD_ONE_REQUEST_RECEIVED_MESSAGE)
+    const newArtist = [{
+        name: req.body.name,
+        dob: req.body.dob,
+        album: [req.body.album]
+    }];
     Artists.create(newArtist, function (err, result) {
         const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
         if (err) {
@@ -189,6 +210,7 @@ module.exports = {
     getAll: getAll,
     getOne: getOne,
     addOne: addOne,
+    addAll: addAll,
     deleteOne: deleteOne,
     fullUpdateOne: fullUpdateOne,
     partialUpdateOne: partialUpdateOne

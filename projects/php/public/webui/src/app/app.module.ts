@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 
@@ -9,7 +9,9 @@ import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DefaultErrorComponent } from './default-error/default-error.component';
 import { HttpClientModule } from '@angular/common/http';
+import { SearchArtistComponent } from './search-artist/search-artist.component';
 import { AddOneArtistComponent } from './add-one-artist/add-one-artist.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -19,12 +21,14 @@ import { AddOneArtistComponent } from './add-one-artist/add-one-artist.component
     FooterComponent,
     NavigationComponent,
     DefaultErrorComponent,
+    SearchArtistComponent,
     AddOneArtistComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot([      
+    ReactiveFormsModule,
+    RouterModule.forRoot([
       {
         path: "artists",
         component: ArtistsComponent
@@ -34,13 +38,21 @@ import { AddOneArtistComponent } from './add-one-artist/add-one-artist.component
         component: ArtistComponent
       },
       {
-        path:"addOneArtist",
-        component:AddOneArtistComponent
+        path:"addoneartist",
+        component: AddOneArtistComponent
       },
       {
-        path:"**",
-        pathMatch:"full",
-        component:DefaultErrorComponent
+        path:"artists/:artistId/update",
+        component: AddOneArtistComponent
+      },
+      {
+        path:"search",
+        component : SearchArtistComponent
+      },
+      {
+        path: "**",
+        pathMatch: "full",
+        component: DefaultErrorComponent
       }
     ])
   ],

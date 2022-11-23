@@ -1,17 +1,33 @@
-<form>
-    <form>
+<form [formGroup]="frmArtist">
     <div class="row">
         <div>Name</div>
-        <div><input type="text" name ="name" formControlName="name" ></div>
+        <div><input type="text" name="name" formControlName="name" value={{artist.name}} /></div>
     </div>
-   
-    <div class="row" >
-        <div>DOB</div>
-        <div><input type="text" name="dob" formControlName="dob" ></div>
-    </div> 
 
-            
+    <div class="row">
+        <div>Date of birth</div>
+        <div><input type="date" name="dob" formControlName="dob" value={{artist.dob}} /></div>
+    </div>
+    <div *ngIf="updateFlag">
+        <p>Albums</p>
+        <div *ngFor="let ab of artist.album">
+            <div class="row">
+                <div>Name</div>
+                <div><input type="text" name="albumName" value={{ab.name}} /></div>
+            </div>
+            <div class="row">
+                <div>Year</div>
+                <div><input type="text" name="albumYear" value={{ab.year}} /></div>
+            </div>
+
+            <div class="row">
+                <div>No. of songs</div>
+                <div><input type="number" name="noOfSongs" value={{ab.noOfSongs}} /></div>
+            </div>
+        </div>
+    </div>
     <div>
-        <button (click)="addOneArtist(frmArtist)">Add</button>  
-    </div> 
-</form> 
+        <button (click)="onAdd(frmArtist)" *ngIf="!updateFlag">Add</button>
+        <button (click)="onUpdate(frmArtist)" *ngIf="updateFlag">Update</button>
+    </div>
+</form>
