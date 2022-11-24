@@ -38,7 +38,7 @@
 
     <!-- ************************************ UPDATE ************************************************* -->
     <div *ngIf="updateFlag">
-        <p>Albums Update Flag True</p>
+        <p>Albums</p>
         <ng-container formArrayName="album">
             <ng-container *ngFor="let albumForm of album.controls; let i = index">
                 <div [formGroupName]="i">
@@ -72,8 +72,8 @@
 
 
     <div>
-        <button (click)="onAdd(frmArtist)" *ngIf="!updateFlag">Add</button>
-        <button (click)="onUpdate(frmArtist)" *ngIf="updateFlag">Update</button>
+        <button (click)="onAdd(frmArtist)" *ngIf="!updateFlag">Add Artist</button>
+        <button (click)="onUpdate(frmArtist)" *ngIf="updateFlag">Update Artist</button>
     </div>
 </form>
 

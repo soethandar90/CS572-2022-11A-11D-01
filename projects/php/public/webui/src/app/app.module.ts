@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { ArtistComponent } from './artist/artist.component';
 import { ArtistsComponent } from './artists/artists.component';
-import { FooterComponent } from './footer/footer.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { DefaultErrorComponent } from './default-error/default-error.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -21,13 +20,13 @@ import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
     AppComponent,
     ArtistComponent,
     ArtistsComponent,
-    FooterComponent,
     NavigationComponent,
     DefaultErrorComponent,
     SearchArtistComponent,
     AddOneArtistComponent,
     LoginComponent,
     RegisterComponent
+
   ],
   imports: [
     BrowserModule,

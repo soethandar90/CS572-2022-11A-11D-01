@@ -4,5 +4,5 @@
     <button routerLink="/search">Search</button>
     <button routerLink="/addoneartist">Add an artist</button>
     <button routerLink="/register">Register</button>
-    <button routerLink="/login">Login</button>
+    <div *ngIf="!isLoggedIn"><button routerLink="/login">Login</button></div>
 </nav>
