@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtistdataService } from '../artistdata.service';
 import { Album, Artist } from '../artists/artists.component';
@@ -12,26 +12,34 @@ import { Album, Artist } from '../artists/artists.component';
 export class AddOneArtistComponent implements OnInit {
 
   artist: Artist = new Artist();
-  album: Album = new Album();
+  // album: Album = new Album();
   updateFlag!: boolean;
+  albCount!: number;
   constructor(private formBuilder: FormBuilder, private artistDataService: ArtistdataService, private route: ActivatedRoute, private router: Router) { }
-  frmAlbum = {
-    albumName: new FormControl(),
-    albumYear: new FormControl(),
-    noOfSongs: new FormControl()
-  }
+  // frmAlbum = {
+  //   albumName: new FormControl(),
+  //   albumYear: new FormControl(),
+  //   noOfSongs: new FormControl()
+  // }
+
+  albumForm = this.formBuilder.group({
+    name: "",
+    year: "",
+    noOfSongs: 0
+  });
 
   frmArtist = this.formBuilder.group({
     _id: new FormControl(),
     name: new FormControl(),
     dob: new FormControl(),
-    album: [this.frmAlbum
-      //   {
-      //   name: new FormControl(),
-      //   year: new FormControl(),
-      //   noOfSongs: new FormControl()
-      // }
-    ]
+    album: this.formBuilder.array([])
+    //[
+    //   {
+    //   name: new FormControl(),
+    //   year: new FormControl(),
+    //   noOfSongs: new FormControl()
+    // }
+    //]
   });
 
   ngOnInit(): void {
@@ -41,7 +49,11 @@ export class AddOneArtistComponent implements OnInit {
       this.updateFlag = true;
       this.artistDataService.getOneArtist(artistId).subscribe({
         next: (artist) => {
-          this.displayArtist(artist)
+          this.frmArtist.value.name = artist.name;
+          this.frmArtist.value.dob = artist.dob;
+          this.frmArtist.value.album = artist.album;
+          this.albCount = artist.album.length;
+          this.displayArtist(artist);
           console.log(artist.album);
         },
         error: (error: any) => {
@@ -52,8 +64,22 @@ export class AddOneArtistComponent implements OnInit {
     }
   }
 
+  get album(): FormArray {
+    return this.frmArtist.controls["album"] as FormArray;
+  }
+
+  addAlbum() {
+    const ab = this.formBuilder.group({
+      name: "",
+      year: "",
+      noOfSongs: 0
+    });
+    this.album.push(ab);
+  }
+
   onAdd(frmArtist: FormGroup) {
-    console.log(frmArtist.value.name);
+    console.log(frmArtist.value);
+    console.log("Helloooooo");
     this.artistDataService.addOneArtist(frmArtist.value).subscribe({
       next: () => {
         this.router.navigateByUrl("/artists");
@@ -61,6 +87,10 @@ export class AddOneArtistComponent implements OnInit {
       error: () => { },
       complete: () => { }
     });
+  }
+
+  removeAlbum(albumIndex: number) {
+    this.album.removeAt(albumIndex);
   }
 
   onUpdate(frmArtist: FormGroup) {
@@ -84,12 +114,10 @@ export class AddOneArtistComponent implements OnInit {
       error: () => { },
       complete: () => { }
     });
-
   }
-
-
 
   private displayArtist(artist: Artist) {
     this.artist = artist;
   }
+
 }

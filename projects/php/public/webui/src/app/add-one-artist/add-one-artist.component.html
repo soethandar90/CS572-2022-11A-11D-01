@@ -8,28 +8,73 @@
         <div>Date of birth</div>
         <div><input type="date" name="dob" formControlName="dob" value={{artist.dob}} /></div>
     </div>
-    <div *ngIf="updateFlag">
-        <p>Albums</p>
-        <div *ngFor="let ab of artist.album">
-            <div class="row">
-                <div>Name</div>
-                <div><input type="text" name="albumName" value={{ab.name}} /></div>
-            </div>
-            <div class="row">
-                <div>Year</div>
-                <div><input type="text" name="albumYear" value={{ab.year}} /></div>
-            </div>
 
-            <div class="row">
-                <div>No. of songs</div>
-                <div><input type="number" name="noOfSongs" value={{ab.noOfSongs}} /></div>
-            </div>
-        </div>
+    <!-- ************************************ REGISTER ************************************************* -->
+    <div *ngIf="!updateFlag">
+        <p>New Albums</p>
+        <ng-container formArrayName="album">
+            <ng-container *ngFor="let albumForm of album.controls; let i = index">
+                <div [formGroupName]="i">
+                    <div>
+                        <div class="row">
+                            <div>Album Name</div>
+                            <div><input name="name" type="text" formControlName="name" /></div>
+                        </div>
+                        <div class="row">
+                            <div>Year of release</div>
+                            <div><input name="year" type="text" formControlName="year" /></div>
+                        </div>
+                        <div class="row">
+                            <div>No. of songs</div>
+                            <div><input name="noOfSongs" type="text" formControlName="noOfSongs" /></div>
+                        </div> <button (click)="removeAlbum(i)"> Remove</button>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <br />
+        <button (click)="addAlbum()">Add Albums</button>
     </div>
+
+    <!-- ************************************ UPDATE ************************************************* -->
+    <div *ngIf="updateFlag">
+        <p>Albums Update Flag True</p>
+        <ng-container formArrayName="album">
+            <ng-container *ngFor="let albumForm of album.controls; let i = index">
+                <div [formGroupName]="i">
+                    <div>
+                        <div class="row">
+                            <div>Album Name</div>
+                            <div><input name="name" type="text" formControlName="name" /></div>
+                        </div>
+                        <div class="row">
+                            <div>Year of release</div>
+                            <div><input name="year" type="text" formControlName="year" /></div>
+                        </div>
+                        <div class="row">
+                            <div>No. of songs</div>
+                            <div><input name="noOfSongs" type="text" formControlName="noOfSongs" /></div>
+                        </div> <button (click)="removeAlbum(i)"> Remove</button>
+                    </div>
+                </div>
+            </ng-container>
+        </ng-container>
+        <br />
+        <button (click)="addAlbum()">Add Albums</button>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+
+
     <div>
         <button (click)="onAdd(frmArtist)" *ngIf="!updateFlag">Add</button>
         <button (click)="onUpdate(frmArtist)" *ngIf="updateFlag">Update</button>
     </div>
 </form>
 
-{{frmArtist.value|json}}
+<!-- {{frmArtist.value|json}} -->

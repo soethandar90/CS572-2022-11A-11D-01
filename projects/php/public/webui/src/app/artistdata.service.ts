@@ -33,6 +33,9 @@ export class ArtistdataService {
 
   public addOneArtist(artist: Artist): Observable<Artist> {
     const url = this.apiBaseUrl + "/artists";
+    console.log(artist.name);
+    console.log(artist.dob);
+    console.log(artist.album);
     return this.http.post(url, artist) as Observable<Artist>;
   }
 

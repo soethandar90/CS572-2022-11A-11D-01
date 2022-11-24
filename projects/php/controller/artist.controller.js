@@ -12,8 +12,8 @@ const getAll = function (req, res) {
         count = parseInt(req.query.count, process.env.MAXIMUM_OFFSET);
     }    
     Artists.find()
-    //.skip(offset)
-    //.limit(count)
+    .skip(offset)
+    .limit(count)
     .sort([['_id', -1]]).exec(function (err, result) {
         const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
         if (err) {
