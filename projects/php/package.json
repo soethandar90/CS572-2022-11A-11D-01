@@ -17,7 +17,7 @@
   "author": "Soe Thandar",
   "license": "ISC",
   "dependencies": {
-    "@angular/cli": "^14.2.9",
+    "@angular/cli": "^14.2.10",
     "@auth0/angular-jwt": "^5.1.0",
     "bcrypt": "^5.1.0",
     "dotenv": "^16.0.3",
