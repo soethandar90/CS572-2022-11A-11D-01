@@ -10,62 +10,64 @@ const getAll = function (req, res) {
     }
     if (req.query && req.query.count) {
         count = parseInt(req.query.count, process.env.MAXIMUM_OFFSET);
-    }    
-    Artists.find()
-    .skip(offset)
-    .limit(count)
-    .sort([['_id', -1]]).exec(function (err, result) {
-        const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
-        if (err) {
+    }
+    // Artists.find()
+    //     .skip(offset)
+    //     .limit(count)
+    //     .sort([['_id', -1]]).exec(function (err, result) {
+    //         const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
+    //         if (err) {
+    //             console.log(process.env.FIND_ERROR_MESSAGE);
+    //             response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+    //             response.message = err;
+    //         }
+    //         console.log(process.env.FOUND_MUSIC_COLLECTION_MESSAGE, result.length);
+    //         res.status(parseInt(process.env.OK_STATUS_CODE)).json(result);
+    //     });
+
+    //Replacing callbacks with promises
+    console.log("Hello");
+    const response = { status: parseInt(process.env.OK_STATUS_CODE), message: "" };
+    Artists.find().skip(offset).limit(count).sort([['_id', -1]]).exec()
+        .then((result) => {
+            res.status(parseInt(process.env.OK_STATUS_CODE)).json(result);
+        })
+        .catch((err) => {
             console.log(process.env.FIND_ERROR_MESSAGE);
             response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
             response.message = err;
-        }
-        console.log(process.env.FOUND_MUSIC_COLLECTION_MESSAGE, result.length);
-        res.status(parseInt(process.env.OK_STATUS_CODE)).json(result);
-    });
-
-    //Replacing callbacks with promises
-    // console.log("Hello");
-    // const response = { status: parseInt(process.env.OK_STATUS_CODE), message: "" };
-    // Artists.find().skip(offset).limit(count).exec()
-    //     .then((artists) => {
-    //         res.status(response.status).json(artists);
-    //     })
-    //     .catch((err) => {
-    //         console.log(process.env.FIND_ERROR_MESSAGE);
-    //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
-    //         response.message = err;
-    //     })
-    //     .finally(() => {
-    //         res.status(response.status).json(response.message);
-    //     });
+        })
+        // .finally(() => {
+        //     res.status(response.status).json(response.message);
+        // })
+        ;
 }
 
 const getOne = function (req, res) {
     const artistId = req.params.artistId;
-    Artists.findById(artistId).exec(function (err, result) {
-        const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
-        if (err) {
-            console.log(process.env.FIND_ERROR_MESSAGE);
-            response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
-            response.message = err;
-        }
-        res.status(response.status).json(result);
-    });
-    // const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
-    // Artists.findById(artistId).exec()
-    //     .then((artist) => {
-    //         res.status(response.status).json(artist);
-    //     })
-    //     .catch((err) => {
+    // Artists.findById(artistId).exec(function (err, result) {
+    //     const response = { status: parseInt(process.env.OK_STATUS_CODE), message: result };
+    //     if (err) {
     //         console.log(process.env.FIND_ERROR_MESSAGE);
     //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
     //         response.message = err;
-    //     })
-    //     .finally(() => {
-    //         res.status(response.status).json(response.message);
-    //     });
+    //     }
+    //     res.status(response.status).json(result);
+    // });
+    const response = { status: parseInt(process.env.OK_STATUS_CODE), message: "" };
+    Artists.findById(artistId).exec()
+        .then((result) => {
+            res.status(response.status).json(result);
+        })
+        .catch((err) => {
+            console.log(process.env.FIND_ERROR_MESSAGE);
+            response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+            response.message = err;
+        })
+        //     .finally(() => {
+        //         res.status(response.status).json(response.message);
+        //     })
+        ;
 }
 
 const addOne = function (req, res) {
@@ -75,53 +77,82 @@ const addOne = function (req, res) {
         dob: req.body.dob,
         album: req.body.album
     };
-    Artists.create(newArtist, function (err, result) {
-        const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
-        if (err) {
+    // Artists.create(newArtist, function (err, result) {
+    //     const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
+    //     if (err) {
+    //         console.log(process.env.ADD_ONE_ERROR_MESSAGE);
+    //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+    //         response.message = err;
+    //     }
+    //     res.status(response.status).json(response.message);
+    // })
+
+    const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: "" };
+    Artists.create(newArtist)
+        .then((result) => {
+            res.status(response.status).json(result);
+        })
+        .catch((err) => {
             console.log(process.env.ADD_ONE_ERROR_MESSAGE);
             response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
             response.message = err;
-        }
-        res.status(response.status).json(response.message);
-    })
+        });
 }
 
-const addAll = function (req, res) {
-    //console.log(process.env.ADD_ONE_REQUEST_RECEIVED_MESSAGE)
-    const newArtist = [{
-        name: req.body.name,
-        dob: req.body.dob,
-        album: [req.body.album]
-    }];
-    Artists.create(newArtist, function (err, result) {
-        const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
-        if (err) {
-            console.log(process.env.ADD_ONE_ERROR_MESSAGE);
-            response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
-            response.message = err;
-        }
-        res.status(response.status).json(response.message);
-    })
-}
+// const addAll = function (req, res) {
+//     //console.log(process.env.ADD_ONE_REQUEST_RECEIVED_MESSAGE)
+//     const newArtist = [{
+//         name: req.body.name,
+//         dob: req.body.dob,
+//         album: [req.body.album]
+//     }];
+//     Artists.create(newArtist, function (err, result) {
+//         const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
+//         if (err) {
+//             console.log(process.env.ADD_ONE_ERROR_MESSAGE);
+//             response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+//             response.message = err;
+//         }
+//         res.status(response.status).json(response.message);
+//     })
+// }
 
 const deleteOne = function (req, res) {
     console.log(process.env.DELETE_REQUEST_RECEIVED_MESSAGE)
     const artistId = req.params.artistId;
-    Artists.findByIdAndDelete(artistId).exec(function (err, result) {
-        const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
-        if (err) {
+    // Artists.findByIdAndDelete(artistId).exec(function (err, result) {
+    //     const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: result };
+    //     if (err) {
+    //         console.log(process.env.FIND_ERROR_MESSAGE);
+    //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+    //         response.message = err;
+    //     } else if (!result) {
+    //         console.log(process.env.COLLECTION_NOT_FOUND_MESSAGE);
+    //         response.status = parseInt(process.env.CONTENT_NOT_FOUND_STATUS_CODE);
+    //         response.message = {
+    //             "message": process.env.COLLECTION_NOT_FOUND_MESSAGE
+    //         };
+    //     }
+    //     res.status(response.status).json(response.message);
+    // });
+
+    const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: "" };
+    Artists.findByIdAndDelete(artistId).exec()
+        .then((result) => {
+            if (!result) {
+                console.log(process.env.COLLECTION_NOT_FOUND_MESSAGE);
+                response.status = parseInt(process.env.CONTENT_NOT_FOUND_STATUS_CODE);
+                response.message = {
+                    "message": process.env.COLLECTION_NOT_FOUND_MESSAGE
+                };
+            }
+            res.status(response.status).json(response.message);
+        })
+        .catch((err) => {
             console.log(process.env.FIND_ERROR_MESSAGE);
             response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
             response.message = err;
-        } else if (!result) {
-            console.log(process.env.COLLECTION_NOT_FOUND_MESSAGE);
-            response.status = parseInt(process.env.CONTENT_NOT_FOUND_STATUS_CODE);
-            response.message = {
-                "message": process.env.COLLECTION_NOT_FOUND_MESSAGE
-            };
-        }
-        res.status(response.status).json(response.message);
-    });
+        });
 }
 /** 
 const updateOne = function (req, res) {
@@ -144,25 +175,50 @@ const updateOne = function (req, res) {
 }*/
 
 const _updateOne = function (req, res, updateMcCallback) {
-    console.log("Update One Music Collection Controller");
+    console.log("Update One Artist Controller");
     const artistId = req.params.artistId;
-    Artists.findById(artistId).exec(function (err, mc) {
-        const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: mc };
-        if (err) {
-            console.log("Error finding Music Collection");
+    // Artists.findById(artistId).exec(function (err, mc) {
+    //     const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: mc };
+    //     if (err) {
+    //         console.log("Error finding Music Collection");
+    //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+    //         response.message = err;
+    //     } else if (!mc) {
+    //         console.log("Music Collection ID not found");
+    //         response.status = parseInt(process.env.CONTENT_NOT_FOUND_STATUS_CODE);
+    //         response.message = { "message": "Music Collection ID not found" };
+    //     }
+    //     if (response.status !== parseInt(process.env.SUCCESS_STATUS_CODE)) {
+    //         res.status(response.status).json(response.message);
+    //     } else {
+    //         updateMcCallback(req, res, mc, response);
+    //     }
+    // });
+
+    const response = { status: parseInt(process.env.SUCCESS_STATUS_CODE), message: "" };
+    Artists.findById(artistId).exec()
+        .then((result) => {
+            if (!result) {
+                console.log("Artist ID not found");
+                response.status = parseInt(process.env.CONTENT_NOT_FOUND_STATUS_CODE);
+                response.message = { "message": "Artist not found" };
+                res.status(response.status).json(response.message);
+            }
+            updateMcCallback(req, res, result, response);
+        })
+        .catch((err) => {
+            console.log("Error finding Artist");
             response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
             response.message = err;
-        } else if (!mc) {
-            console.log("Music Collection ID not found");
-            response.status = parseInt(process.env.CONTENT_NOT_FOUND_STATUS_CODE);
-            response.message = { "message": "Music Collection ID not found" };
-        }
-        if (response.status !== parseInt(process.env.SUCCESS_STATUS_CODE)) {
             res.status(response.status).json(response.message);
-        } else {
-            updateMcCallback(req, res, mc, response);
-        }
-    });
+        })
+
+    // if (response.status !== parseInt(process.env.SUCCESS_STATUS_CODE)) {
+    //     res.status(response.status).json(response.message);
+    // } else {
+    //     updateMcCallback(req, res, result, response);
+    // }
+
 }
 
 const fullUpdateOne = function (req, res) {
@@ -171,13 +227,23 @@ const fullUpdateOne = function (req, res) {
         mc.name = req.body.name;
         mc.dob = req.body.dob;
         mc.album = req.body.album;
-        mc.save(function (err, updatedMc) {
-            if (err) {
+        // mc.save(function (err, updatedMc) {
+        //     if (err) {
+        //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+        //         response.message = err;
+        //     }
+        //     res.status(response.status).json(response.message);
+        // });
+
+        mc.save()
+            .then((result) => {
+                res.status(response.status).json(response.message);
+            })
+            .catch((err) => {
                 response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
                 response.message = err;
-            }
-            res.status(response.status).json(response.message);
-        });
+            });
+
     };
     _updateOne(req, res, mcUpdate);
 }
@@ -194,14 +260,24 @@ const partialUpdateOne = function (req, res) {
         if (req.body.album) {
             mc.album = req.body.album;
         }
-        mc.save(function (err, updatedMc) {
-            if (err) {
+        // mc.save(function (err, updatedMc) {
+        //     if (err) {
+        //         response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
+        //         response.message = err;
+        //     }
+        //     res.status
+        //         (response.status).json(response.message);
+        // });
+
+        mc.save()
+            .then((result) => {
+                res.status(response.status).json(response.message);
+            })
+            .catch((err) => {
                 response.status = parseInt(process.env.SYSTEM_ERROR_STATUS_CODE);
                 response.message = err;
-            }
-            res.status
-                (response.status).json(response.message);
-        });
+            });
+
     };
     _updateOne(req, res, mcUpdate);
 }
@@ -210,7 +286,7 @@ module.exports = {
     getAll: getAll,
     getOne: getOne,
     addOne: addOne,
-    addAll: addAll,
+    //addAll: addAll,
     deleteOne: deleteOne,
     fullUpdateOne: fullUpdateOne,
     partialUpdateOne: partialUpdateOne
