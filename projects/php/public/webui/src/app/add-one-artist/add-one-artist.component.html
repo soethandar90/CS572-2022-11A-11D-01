@@ -13,16 +13,16 @@
         <div *ngFor="let ab of artist.album">
             <div class="row">
                 <div>Name</div>
-                <div><input type="text" name="albumName" value={{ab.name}} /></div>
+                <div><input type="text" name="albumName" formControlName="album.albumName" value={{ab.name}} /></div>
             </div>
             <div class="row">
                 <div>Year</div>
-                <div><input type="text" name="albumYear" value={{ab.year}} /></div>
+                <div><input type="text" name="albumYear" formControlName="album.albumYear" value={{ab.year}} /></div>
             </div>
 
             <div class="row">
                 <div>No. of songs</div>
-                <div><input type="number" name="noOfSongs" value={{ab.noOfSongs}} /></div>
+                <div><input type="number" name="noOfSongs" formControlName="album.noOfSongs" value={{ab.noOfSongs}} /></div>
             </div>
         </div>
     </div>

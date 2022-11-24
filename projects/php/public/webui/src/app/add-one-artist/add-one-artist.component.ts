@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArtistdataService } from '../artistdata.service';
-import { Artist } from '../artists/artists.component';
+import { Album, Artist } from '../artists/artists.component';
 
 @Component({
   selector: 'app-add-one-artist',
@@ -12,25 +12,26 @@ import { Artist } from '../artists/artists.component';
 export class AddOneArtistComponent implements OnInit {
 
   artist: Artist = new Artist();
+  album: Album = new Album();
   updateFlag!: boolean;
   constructor(private formBuilder: FormBuilder, private artistDataService: ArtistdataService, private route: ActivatedRoute, private router: Router) { }
-  // frmAlbum = {
-  //   albumName: new FormControl(),
-  //   albumYear: new FormControl(),
-  //   noOfSongs: new FormControl()
-  // }
+  frmAlbum = {
+    albumName: new FormControl(),
+    albumYear: new FormControl(),
+    noOfSongs: new FormControl()
+  }
 
   frmArtist = this.formBuilder.group({
     _id: new FormControl(),
     name: new FormControl(),
     dob: new FormControl(),
-    album: [//this.frmAlbum
-      {
-      name: new FormControl(),
-      year: new FormControl(),
-      noOfSongs: new FormControl()
-    }
-  ]
+    album: [this.frmAlbum
+      //   {
+      //   name: new FormControl(),
+      //   year: new FormControl(),
+      //   noOfSongs: new FormControl()
+      // }
+    ]
   });
 
   ngOnInit(): void {
@@ -73,7 +74,9 @@ export class AddOneArtistComponent implements OnInit {
     if (!frmArtist.value.dob) {
       frmArtist.value.dob = this.artist.dob;
     }
-    console.log("Album value is "+frmArtist.value.album.name);
+    if (!frmArtist.value.album) {
+      frmArtist.value.album = this.artist.album;
+    }
     this.artistDataService.updateOneArtist(artistId, frmArtist.value).subscribe({
       next: () => {
         this.router.navigateByUrl("/artists/" + artistId);
@@ -83,6 +86,8 @@ export class AddOneArtistComponent implements OnInit {
     });
 
   }
+
+
 
   private displayArtist(artist: Artist) {
     this.artist = artist;

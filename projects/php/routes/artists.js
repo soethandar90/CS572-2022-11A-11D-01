@@ -4,6 +4,7 @@ const express = require(process.env.EXPRESS);
 const artistController = require(process.env.ARTIST_CONTROLLER_PATH);
 //const authenticationController = require("../controller/authentication.controller");
 const albumController = require(process.env.ALBUM_CONTROLLER_PATH);
+const userController = require("../controller/users.controller");
 const router = express.Router();
 
 //routes need method and url
@@ -26,6 +27,12 @@ router.route(process.env.ARTIST_BYID_ALBUM_ROUTE)
 
 router.route(process.env.ARTIST_BYID_ALBUM_BYAID_ROUTE)
     .get(albumController.getOne)
+
+router.route("/user/register")
+    .post(userController.register);
+
+router.route("/user/login")
+    .post(userController.login);
 
 //exporting router function
 module.exports = router;

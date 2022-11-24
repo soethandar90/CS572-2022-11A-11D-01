@@ -37,9 +37,6 @@ export class ArtistdataService {
   }
 
   public updateOneArtist(artistId:string, artist: Artist): Observable<Artist> {
-    console.log("Artist ID in service is : "+artistId);
-    console.log("Artist name in service is : "+artist.name);
-    console.log("Artist dob in service is : "+artist.dob);
     const url = this.apiBaseUrl + "/artists/" + artistId;
     return this.http.put(url, artist) as Observable<Artist>;
   }

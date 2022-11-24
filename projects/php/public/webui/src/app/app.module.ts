@@ -11,7 +11,10 @@ import { DefaultErrorComponent } from './default-error/default-error.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SearchArtistComponent } from './search-artist/search-artist.component';
 import { AddOneArtistComponent } from './add-one-artist/add-one-artist.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 
 @NgModule({
   declarations: [
@@ -22,12 +25,15 @@ import { ReactiveFormsModule } from '@angular/forms';
     NavigationComponent,
     DefaultErrorComponent,
     SearchArtistComponent,
-    AddOneArtistComponent
+    AddOneArtistComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FormsModule,
     RouterModule.forRoot([
       {
         path: "artists",
@@ -38,16 +44,24 @@ import { ReactiveFormsModule } from '@angular/forms';
         component: ArtistComponent
       },
       {
-        path:"addoneartist",
+        path: "addoneartist",
         component: AddOneArtistComponent
       },
       {
-        path:"artists/:artistId/update",
+        path: "artists/:artistId/update",
         component: AddOneArtistComponent
       },
       {
-        path:"search",
-        component : SearchArtistComponent
+        path: "search",
+        component: SearchArtistComponent
+      },
+      {
+        path: "register",
+        component: RegisterComponent,
+      },
+      {
+        path: "login",
+        component: LoginComponent,
       },
       {
         path: "**",
@@ -56,7 +70,12 @@ import { ReactiveFormsModule } from '@angular/forms';
       }
     ])
   ],
-  providers: [],
+  providers: [{
+    provide: JWT_OPTIONS,
+    useValue: JWT_OPTIONS
+  },
+    JwtHelperService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
